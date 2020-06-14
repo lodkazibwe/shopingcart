@@ -14,9 +14,6 @@ public class OrderDetailsController {
     @Autowired
     private OrderDetailsService orderdetailsservice;
 
-    @PostMapping("/order/{id}/orderDetails")
-    public OrderDetails addOrderDetail(@RequestBody OrderDetails orderdetails, @PathVariable int id){
-        return orderdetailsservice.addOrderDetail(orderdetails, id);
-    }
+
 
 }
