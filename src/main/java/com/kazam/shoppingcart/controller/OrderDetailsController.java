@@ -11,9 +11,6 @@ import java.util.List;
 @RestController
 public class OrderDetailsController {
 
-    @Autowired
-    private OrderDetailsService orderdetailsservice;
-
 
 
 }

@@ -19,6 +19,7 @@ public class OrderDetails {
 
     @ManyToOne
     private Product product;
+
     private int quantity;
     private double amount;
 

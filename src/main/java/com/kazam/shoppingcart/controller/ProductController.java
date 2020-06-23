@@ -3,38 +3,50 @@ package com.kazam.shoppingcart.controller;
 import com.kazam.shoppingcart.model.Product;
 import com.kazam.shoppingcart.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 public class ProductController {
 
 @Autowired
     ProductService productservice;
 @PostMapping ("/addProduct")
-public Product saveProduct (@RequestBody Product product){
+public String saveProduct ( Product product){
 
-    return productservice.saveProduct(product);
+    productservice.saveProduct(product);
+    return "redirect:/getProducts";
+
 }
+
 @GetMapping("/getProduct/{id}")
+@ResponseBody
 public Product getProduct(@PathVariable int id){
-return productservice.getProduct(id);
+    return productservice.getProduct(id);
 }
-@GetMapping("/getProducts")
-    public List<Product> getAllProducts(){
-        return productservice.getAllProducts();
+
+@RequestMapping("/getProducts")
+    public String getAllProducts(Model model){
+    List<Product> products= productservice.getAllProducts();
+    model.addAttribute("products",products);
+    return "Products";
     }
 
-@PutMapping("/updateProduct/{id}")
-    public Product updateProduct(@RequestBody Product product, @PathVariable int id){
-       return  productservice.updateProduct(product, id);
-    }
-@DeleteMapping("/deleteProduct/{id}")
-    public void deleteProduct(@PathVariable int id){
-        productservice.deleteProduct(id);
+@PostMapping("/updateProduct")
+    public String updateProduct(Product product){
+       productservice.updateProduct(product);
+    return "redirect:/getProducts";
     }
 
+@RequestMapping(value="/deleteProduct/{id}", method={RequestMethod.DELETE, RequestMethod.GET})
+    public String deleteProduct(@PathVariable int id){
+
+    productservice.deleteProduct(id);
+    return "redirect:/getProducts";
+    }
 
 }
 

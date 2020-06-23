@@ -24,7 +24,7 @@ public Product saveProduct(Product product){
         return productrepository.findAll();
     }
 
-    public Product updateProduct(Product product, int id){
+    public Product updateProduct(Product product){
     return productrepository.save(product);
     }
 

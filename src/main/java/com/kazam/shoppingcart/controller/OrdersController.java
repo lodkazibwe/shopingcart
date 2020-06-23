@@ -5,11 +5,13 @@ import com.kazam.shoppingcart.model.Orders;
 import com.kazam.shoppingcart.service.OrdersService;
 import com.kazam.shoppingcart.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 public class OrdersController {
 
     @Autowired
@@ -19,14 +21,19 @@ public class OrdersController {
     private ProductService productservice;
 
     @PostMapping("/addOrder")
-    public Orders saveOrders(@RequestBody Orders order){
+    public String saveOrders(Orders order){
+
         calculateTotals(order);
-        return ordersservice.saveOrders(order);
+        ordersservice.saveOrders(order);
+        return "redirect:/getOrder/"+order.getId();
+
     }
 
     @GetMapping("/getOrder/{id}")
-    public Orders getOrder(@PathVariable int id){
-        return ordersservice.getOrder(id);
+    public String getOrder(@PathVariable int id, Model model){
+        Orders order=ordersservice.getOrder(id);
+        model.addAttribute("order", order);
+        return "Order";
     }
 
     @GetMapping("/getOrderByAddress/{customerAddress}")

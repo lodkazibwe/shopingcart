@@ -1,0 +1,210 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Products</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../static/js/main.js" th:src="@{/main.js}"></script>
+</head>
+<body>
+<h1>Available Products</h1>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal" >Add New</button>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#orderModal" >Cart</button>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>NAME</th>
+        <th>UNIT PRICE</th>
+        <th>QUANTITY</th>
+        <th>UPDATE</th>
+        <th>DELETE</th>
+        <th>add_to_cart</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="Product:${products}">
+        <td th:text="${Product.id}">id</td>
+        <td th:text="${Product.name}">name</td>
+        <td th:text="${Product.unitPrice}">unitPrice</td>
+        <td th:text="${Product.quantity}">quantity</td>
+        <td><a th:href ="@{'/getProduct/'+${Product.id}}" id="edit_btn" type="button"  class="btn btn-warning"  >Edit</a></td>
+        <td><a  th:href ="@{'/deleteProduct/'+${Product.id}}"  id="del_btn" type="button"  class="btn btn-danger" >delete</a></td>
+        <td><a  th:href ="@{'/getProduct/'+${Product.id}}"  id="cart_btn" type="button"  class="btn btn-success" >add</a></td>
+    </tr>
+    </tbody>
+</table>
+
+
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+    <form th:action="@{/addProduct}" method="post">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addModalLabel">New Product</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-group">
+                    <label for="product-name" class="col-form-label">NAME:</label>
+                    <input type="text" class="form-control" id="product-name" name="name">
+                </div>
+
+                <div class="form-group">
+                    <label for="unit-price" class="col-form-label">UNIT PRICE:</label>
+                    <input type="text" class="form-control" id="unit-price" name="unitPrice">
+                </div>
+
+                <div class="form-group">
+                    <label for="quantity" class="col-form-label">QUANTITY:</label>
+                    <input type="text" class="form-control" id="quantity" name="quantity">
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
+                <button type="submit" class="btn btn-primary">SAVE</button>
+            </div>
+        </div>
+    </div>
+    </form>
+</div>
+
+
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+    <form th:action="@{/updateProduct}" method="post">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateModalLabel">updateProduct</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="p_id" class="col-form-label">ID:</label>
+                        <input type="text" class="form-control" id="p_id" name="id" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="p_name" class="col-form-label">NAME:</label>
+                        <input type="text" class="form-control" id="p_name" name="name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="unitPrice" class="col-form-label">UNIT PRICE:</label>
+                        <input type="text" class="form-control" id="unitPrice" name="unitPrice">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="quantty" class="col-form-label">QUANTITY:</label>
+                        <input type="text" class="form-control" id="quantty" name="quantity">
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
+                    <button type="submit" class="btn btn-primary">UPDATE</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel" aria-hidden="true">
+    <form th:action="@{/addOrder}"   method="post">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="orderModalLabel">order</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="address" class="col-form-label">ADDRESS:</label>
+                        <input type="text" class="form-control" id="address" name="customerAddress">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contact" class="col-form-label">CONTACT:</label>
+                        <input type="text" class="form-control" id="contact" name="customerContact">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name" class="col-form-label">NAME:</label>
+                        <input type="text" class="form-control" id="name" name="customerName">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="o_date" class="col-form-label">DATE:</label>
+                        <input type="text" class="form-control" id="o_date" name="orderDate">
+                    </div>
+
+                    <div class="form-group">
+                        <table class="table" id="orderDetails">
+                            <thead>
+                            <tr>
+                                <th>P_ID</th>
+                                <th>P_NAME</th>
+                                <th>QUANTITY</th>
+                                <th>AMOUNT</th>
+
+                            </tr>
+                            </thead>
+                        <tbody>
+
+                        </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
+                    <button type="submit" class="btn btn-primary">SAVE</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <a href ="" type="button" id="del_ref" class="btn btn-danger">delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

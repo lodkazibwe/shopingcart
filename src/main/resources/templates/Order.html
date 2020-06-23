@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>order</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>PRODUCT ID</th>
+        <th>PRODUCT</th>
+        <th>QUANTITY</th>
+        <th>AMOUNT</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="OrderDetail:${order.orderdetails}">
+        <td th:text="${OrderDetail.product.id}">id</td>
+        <td th:text="${OrderDetail.product.name}">product</td>
+        <td th:text="${OrderDetail.quantity}">quantity</td>
+        <td th:text="${OrderDetail.amount}">amount</td>
+    </tr>
+    </tbody>
+</table><br>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>TOTAL AMOUNT</th>
+        <th>CUSTOMER NAME</th>
+        <th>CUSTOMER ADDRESS</th>
+        <th>CUSTOMER CONTACT</th>
+
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr >
+        <td th:text="${order.totalAmount}">id</td>
+        <td th:text="${order.customerName}">product</td>
+        <td th:text="${order.customerAddress}">quantity</td>
+        <td th:text="${order.customerContact}">amount</td>
+
+    </tr>
+    </tbody>
+</table><br>
+
+</body>
+</html>

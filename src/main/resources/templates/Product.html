@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Product</title>
+</head>
+<body>
+<h1 th:text="${Product.id}">Product</h1>
+<table class="table table-striped">
+<thead>
+<tr>
+    <th>ID</th>
+    <th>NAME</th>
+    <th>UNIT PRICE</th>
+    <th>QUANTITY</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+    <td th:text="${Product.id}">id</td>
+    <td th:text="${Product.name}">name</td>
+    <td th:text="${Product.unitPrice}">unitPrice</td>
+    <td th:text="${Product.quantity}">quantity</td>
+</tr>
+</tbody>
+</table>
+
+
+
+</body>
+</html>
